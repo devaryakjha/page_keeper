@@ -1,15 +1,16 @@
 library page_keeper;
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart' show MaterialRouteTransitionMixin;
-import 'package:flutter/cupertino.dart' show CupertinoRouteTransitionMixin;
 
-part 'page_keeper_page.dart';
-part 'full_page.dart';
-part 'dialog_page.dart';
+import 'package:flutter/cupertino.dart' show CupertinoRouteTransitionMixin;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show MaterialRouteTransitionMixin;
+import 'package:flutter/widgets.dart';
+
 part 'bottom_sheet_page.dart';
+part 'dialog_page.dart';
+part 'full_page.dart';
+part 'page_keeper_page.dart';
 
 class PageKeeper extends StatefulWidget {
   const PageKeeper({
@@ -25,6 +26,7 @@ class PageKeeper extends StatefulWidget {
   static PageKeeperPage<T> page<T>({
     required Widget child,
     required PageType type,
+    LocalKey? key,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
     bool maintainState = true,
@@ -32,6 +34,7 @@ class PageKeeper extends StatefulWidget {
     late PageKeeperPage<T> pageRoute;
     if (type == PageType.cupertino || type == PageType.material) {
       pageRoute = FullPage(
+        key: key,
         child: child,
         name: child.runtimeType.toString(),
         kind: type,
@@ -40,11 +43,13 @@ class PageKeeper extends StatefulWidget {
       );
     } else if (type == PageType.dialog) {
       pageRoute = DialogPage(
+        key: key,
         child: child,
         name: child.runtimeType.toString(),
       );
     } else if (type == PageType.bottomsheet) {
       pageRoute = BottomSheetPage(
+        key: key,
         child: child,
         name: child.runtimeType.toString(),
         transitionDuration: transitionDuration,
