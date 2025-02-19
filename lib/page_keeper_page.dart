@@ -16,7 +16,10 @@ abstract class PageKeeperPage<T> extends Page<T> {
   Route<T> buildRoute(BuildContext context);
 
   @override
-  bool canUpdate(Page other) => other is PageKeeperPage && other.child == child;
+  bool canUpdate(Page other) => 
+    other is PageKeeperPage && 
+    other.child.runtimeType == child.runtimeType && 
+    key == other.key;
 
   @override
   Route<T> createRoute(BuildContext context) {
